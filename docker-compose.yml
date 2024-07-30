@@ -7,7 +7,11 @@ services:
       - ./.env
     stop_signal: SIGINT
     container_name: django_api
-    command: bash -c "sleep 5s; echo "Hello""
+    command: bash -c "sleep 3s;
+      python bike_api/manage.py makemigrations;
+      python bike_api/manage.py migrate;
+      python bike_api/manage.py createsuperuser --noinput;
+      python bike_api/manage.py runserver 0.0.0.0:8000;"
     volumes:
       - ./dump/app:/usr/src/app
     ports:
