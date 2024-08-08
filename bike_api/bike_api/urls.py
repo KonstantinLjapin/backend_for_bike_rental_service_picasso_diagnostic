@@ -9,6 +9,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView, TokenVerifyView,
 )
+from users_api.views import CreateUserView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -28,6 +29,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('api/admin/', admin.site.urls),
+    path('api/users/register', CreateUserView.as_view(), name='register'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
