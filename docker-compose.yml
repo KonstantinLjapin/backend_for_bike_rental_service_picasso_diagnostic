@@ -11,6 +11,8 @@ services:
       python bike_api/manage.py makemigrations;
       python bike_api/manage.py migrate;
       python bike_api/manage.py createsuperuser --noinput;
+      python bike_api/manage.py loaddata users;
+      python bike_api/manage.py loaddata bikes;
       python bike_api/manage.py runserver 0.0.0.0:8000;"
     volumes:
       - ./dump/app:/usr/src/app

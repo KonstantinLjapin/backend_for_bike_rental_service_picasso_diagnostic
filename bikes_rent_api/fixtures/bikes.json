@@ -1,0 +1,20 @@
+[
+  {
+    "model": "bikes_rent_api.Bike",
+    "fields": {
+    "bike_model": "mountain_bike_dragon"
+    }
+  },
+  {
+    "model": "bikes_rent_api.Bike",
+    "fields": {
+    "bike_model": "strela"
+    }
+  },
+  {
+    "model": "bikes_rent_api.Bike",
+    "fields": {
+    "bike_model": "desna"
+    }
+  }
+]

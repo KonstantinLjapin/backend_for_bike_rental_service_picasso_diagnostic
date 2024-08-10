@@ -14,4 +14,4 @@ class CustomUser(admin.ModelAdmin):
 
 @admin.register(Rent)
 class CustomUser(admin.ModelAdmin):
-    list_display = ('id', 'bike', 'date')
+    list_display = ('id', 'bike', 'user', 'date')

@@ -1,0 +1,26 @@
+[
+  {
+    "model": "users_api.CustomUser",
+    "fields": {
+    "username": "user@example",
+    "password": "qwerty",
+    "email": "user@example.com"
+    }
+  },
+  {
+    "model": "users_api.CustomUser",
+    "fields": {
+    "username": "user@examplenext",
+    "password": "qwerty09876",
+    "email": "usernext@example.com"
+    }
+  },
+  {
+    "model": "users_api.CustomUser",
+    "fields": {
+    "username": "userlast@examplelast",
+    "password": "qwerty12345",
+    "email": "userlast@example.com"
+    }
+  }
+]

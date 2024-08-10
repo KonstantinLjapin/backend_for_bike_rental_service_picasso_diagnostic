@@ -1,17 +1,15 @@
 from rest_framework import permissions, status
-from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth import get_user_model, authenticate, login, logout
-from .serializers import UserSerializer
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login, logout
+from .serializers import BaseUserSerializer, ProfileSerializer
 
 
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
 
     def post(self, request):
-        serializer = UserSerializer(data=request.data)
+        serializer = BaseUserSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -51,5 +49,5 @@ class UserProfileView(APIView):
 
     def get(self, request):
         user = request.user
-        serializer = UserSerializer(user)
+        serializer = ProfileSerializer(instance=user)
         return Response(serializer.data, status=status.HTTP_200_OK)
