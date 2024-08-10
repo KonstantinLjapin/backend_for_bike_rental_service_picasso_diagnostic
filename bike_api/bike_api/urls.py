@@ -10,6 +10,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView, TokenVerifyView,
 )
 from users_api.views import RegisterView, LoginView, LogoutView, UserProfileView
+from bikes_rent_api.views import ListBikeView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -33,7 +34,7 @@ urlpatterns = [
     path('api/users/login', LoginView.as_view(), name='login'),
     path('api/users/logout', LogoutView.as_view(), name='logout'),
     path('api/users/profile', UserProfileView.as_view(), name='profile'), # history include
-    #path('api/bikes/list', BikesListView.as_view(), name='profile'),
+    path('api/bikes/list', ListBikeView.as_view(), name='bikes'),
     #path('api/bikes/profile', BikeView.as_view(), name='profile'), rent,pull
     #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
