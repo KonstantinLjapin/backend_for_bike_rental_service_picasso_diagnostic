@@ -9,7 +9,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView, TokenVerifyView,
 )
-from users_api.views import CreateUserView
+from users_api.views import RegisterView, LoginView, LogoutView, UserProfileView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -29,8 +29,13 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('api/admin/', admin.site.urls),
-    path('api/users/register', CreateUserView.as_view(), name='register'),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/users/register', RegisterView.as_view(), name='register'),
+    path('api/users/login', LoginView.as_view(), name='login'),
+    path('api/users/logout', LogoutView.as_view(), name='logout'),
+    path('api/users/profile', UserProfileView.as_view(), name='profile'), # history include
+    #path('api/bikes/list', BikesListView.as_view(), name='profile'),
+    #path('api/bikes/profile', BikeView.as_view(), name='profile'), rent,pull
+    #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
