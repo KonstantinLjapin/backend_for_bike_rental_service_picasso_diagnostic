@@ -13,11 +13,8 @@ class Bike(models.Model):
 class Rent(models.Model):
     bike = models.ForeignKey(Bike, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, related_name='rents', on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True, blank=True)
+    date_start = models.DateTimeField(auto_now_add=True, blank=True)
+    date_end = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return "Rent " + str(self.user) + " " + str(self.bike)
-
-
-class History(models.Model):
-    rent = models.ForeignKey(Rent, on_delete=models.CASCADE)

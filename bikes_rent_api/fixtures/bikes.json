@@ -16,5 +16,23 @@
     "fields": {
     "bike_model": "desna"
     }
+  },
+  {
+    "model": "bikes_rent_api.Bike",
+    "fields": {
+    "bike_model": "blesna"
+    }
+  },
+  {
+    "model": "bikes_rent_api.Bike",
+    "fields": {
+    "bike_model": "sosna"
+    }
+  },
+  {
+    "model": "bikes_rent_api.Bike",
+    "fields": {
+    "bike_model": "kozza"
+    }
   }
 ]

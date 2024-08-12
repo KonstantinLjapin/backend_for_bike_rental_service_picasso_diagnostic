@@ -1,3 +1,5 @@
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,7 +9,9 @@ from .serializers import BaseUserSerializer, ProfileSerializer
 
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = []
 
+    @swagger_auto_schema()
     def post(self, request):
         serializer = BaseUserSerializer(data=request.data)
 
@@ -19,7 +23,9 @@ class RegisterView(APIView):
 
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
+    authentication_classes = []
 
+    @swagger_auto_schema()
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -33,12 +39,10 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
-    def get(self, request):
-        logout(request)
-        return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
-
+    @swagger_auto_schema()
     def post(self, request):
         logout(request)
         return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
@@ -46,7 +50,9 @@ class LogoutView(APIView):
 
 class UserProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
+    @swagger_auto_schema()
     def get(self, request):
         user = request.user
         serializer = ProfileSerializer(instance=user)
