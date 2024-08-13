@@ -14,7 +14,6 @@ class RegisterView(APIView):
     @swagger_auto_schema()
     def post(self, request):
         serializer = BaseUserSerializer(data=request.data)
-
         if serializer.is_valid():
             serializer.save()
             return Response({'message': 'User registered successfully'}, status=status.HTTP_201_CREATED)
