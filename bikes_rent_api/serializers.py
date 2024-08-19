@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
 from .models import Bike, Rent
 
 
 class BaseBikeSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
 
     class Meta:
         model = Bike
