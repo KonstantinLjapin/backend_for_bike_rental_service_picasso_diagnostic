@@ -15,6 +15,7 @@ class Rent(models.Model):
     user = models.ForeignKey(CustomUser, related_name='rents', on_delete=models.CASCADE)
     date_start = models.DateTimeField(auto_now_add=True, blank=True)
     date_end = models.DateTimeField(blank=True, null=True)
+    close = models.BooleanField(default=False)
 
     def __str__(self):
         return "Rent " + str(self.user) + " " + str(self.bike)

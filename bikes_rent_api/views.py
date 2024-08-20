@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, status
 from rest_framework.response import Response
@@ -31,10 +33,14 @@ class RentStartView(APIView):
             bike_serializer.is_valid()
             if "bike_model" in bike_serializer.errors.keys():
                 if "bike with this bike model already exists." in bike_serializer.errors.get("bike_model"):
+                    user.fuse = False
+                    user.save(update_fields=["fuse"])
                     bike: Bike = Bike.objects.get(id=request.data["id"])
+                    bike.fuse = False
+                    bike.save(update_fields=["fuse"])
                     rent: Rent = Rent(bike=bike, user=user)
                     rent.save()
-                    return Response({'message': f'{rent.date_start}'}, status=status.HTTP_202_ACCEPTED)
+                    return Response({'message': f'{rent}'}, status=status.HTTP_202_ACCEPTED)
         return Response({'message': 'You must end last rent'}, status=status.HTTP_412_PRECONDITION_FAILED)
 
 
@@ -45,13 +51,12 @@ class RentEndView(APIView):
     @swagger_auto_schema()
     def put(self, request):
         user = CustomUser.objects.get(id=request.user.id)
-        bike_serializer = BaseBikeSerializer(data=request.data)
-        bike_serializer.is_valid()
-        if "bike_model" in bike_serializer.errors.keys():
-            if "bike with this bike model already exists." in bike_serializer.errors.get("bike_model"):
-                Bike.objects.filter(bike_model=bike_serializer.data.get('bike_model')).update(fuse=True)
-                user.fuse = True
-                user.save(update_fields=["fuse"])
-                bike = Bike.objects.get(bike_model=bike_serializer.data.get('bike_model'))
-                return Response({'message': f'{bike.bike_model}'}, status=status.HTTP_202_ACCEPTED)
-        return Response({'message': 'You must end last rent'}, status=status.HTTP_412_PRECONDITION_FAILED)
+        rent: Rent = Rent.objects.filter(user=user).get(close=False)
+        rent.bike.fuse = True
+        rent.bike.save(update_fields=["fuse"])
+        user.fuse = True
+        user.save(update_fields=["fuse"])
+        rent.close = True
+        rent.date_end = datetime.now()
+        rent.save()
+        return Response({'message': f'{rent.bike}'}, status=status.HTTP_205_RESET_CONTENT)
