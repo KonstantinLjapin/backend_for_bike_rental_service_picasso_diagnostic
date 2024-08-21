@@ -1,6 +1,5 @@
 from django.contrib import admin
-from django.urls import include, path
-from django.urls import re_path
+from django.urls import path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -11,7 +10,6 @@ from rest_framework_simplejwt.views import (
 )
 from users_api.views import RegisterView, LoginView, LogoutView, UserProfileView
 from bikes_rent_api.views import ListBikeView, RentStartView, RentEndView
-
 schema_view = get_schema_view(
    openapi.Info(
       title="Snippets API",

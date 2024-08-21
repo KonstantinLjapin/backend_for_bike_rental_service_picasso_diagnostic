@@ -3,11 +3,12 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from django.contrib.auth import authenticate, login, logout
 from .serializers import BaseUserSerializer, ProfileSerializer
 
 
-class RegisterView(APIView):
+class RegisterView(GenericAPIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
 
@@ -20,7 +21,7 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LoginView(APIView):
+class LoginView(GenericAPIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
 
@@ -37,7 +38,7 @@ class LoginView(APIView):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-class LogoutView(APIView):
+class LogoutView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
@@ -47,7 +48,7 @@ class LogoutView(APIView):
         return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
 
 
-class UserProfileView(APIView):
+class UserProfileView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 

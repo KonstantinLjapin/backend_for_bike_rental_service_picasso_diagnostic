@@ -3,14 +3,15 @@ from datetime import datetime
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import permissions, status
 from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import BaseBikeSerializer, BaseRentSerializer
 from .models import Bike, Rent
 from users_api.models import CustomUser
+from .tasks import reprocessed
 
 
-class ListBikeView(APIView):
+class ListBikeView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
@@ -21,7 +22,7 @@ class ListBikeView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class RentStartView(APIView):
+class RentStartView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
@@ -44,7 +45,7 @@ class RentStartView(APIView):
         return Response({'message': 'You must end last rent'}, status=status.HTTP_412_PRECONDITION_FAILED)
 
 
-class RentEndView(APIView):
+class RentEndView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
@@ -59,4 +60,5 @@ class RentEndView(APIView):
         rent.close = True
         rent.date_end = datetime.now()
         rent.save()
+        reprocessed.delay(user)
         return Response({'message': f'{rent.bike}'}, status=status.HTTP_205_RESET_CONTENT)
