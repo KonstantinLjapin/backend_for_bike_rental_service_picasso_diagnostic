@@ -60,5 +60,5 @@ class RentEndView(GenericAPIView):
         rent.close = True
         rent.date_end = datetime.now()
         rent.save()
-        reprocessed.delay(user)
+        reprocessed.delay(user.id, rent.id)
         return Response({'message': f'{rent.bike}'}, status=status.HTTP_205_RESET_CONTENT)

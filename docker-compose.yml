@@ -29,7 +29,9 @@ services:
       - ./.env
     stop_signal: SIGINT
     container_name: celery_worker
-    command: bash -c "sleep 10s;cd bike_api; celery -A bike_api worker -l INFO;"
+    command: bash -c "sleep 5s;
+                      cd bike_api;
+                      celery -A bike_api worker -l INFO;"
     volumes:
       - ./dump/app:/usr/src/app
     depends_on:

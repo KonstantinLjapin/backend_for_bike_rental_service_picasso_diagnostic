@@ -33,4 +33,4 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         Depth = 3
         model = UserModel
-        fields = ("id", "username", "email", "fuse", "rents")
+        fields = ("id", "username", "email", "fuse", "rents", "wallet")
