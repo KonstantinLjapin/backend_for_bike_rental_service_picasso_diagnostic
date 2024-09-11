@@ -2,6 +2,7 @@ import environ
 import os
 from datetime import timedelta
 from pathlib import Path
+import drf_yasg
 
 env = environ.Env(
     # set casting, default value
@@ -126,6 +127,7 @@ DATABASES = {
 
 SWAGGER_SETTINGS = {
     'VALIDATOR_URL': 'http://localhost:8000',
+
 }
 
 

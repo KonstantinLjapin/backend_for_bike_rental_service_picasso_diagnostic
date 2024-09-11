@@ -2,18 +2,20 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework import permissions, status
 from rest_framework.response import Response
+from rest_framework.request import Request
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from django.contrib.auth import authenticate, login, logout
 from .serializers import BaseUserSerializer, ProfileSerializer
+from drf_yasg import openapi
 
 
 class RegisterView(GenericAPIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
 
-    @swagger_auto_schema()
-    def post(self, request):
+    @swagger_auto_schema(method='post')
+    def post(self, request: Request, *args, **kwargs) -> Response:
         serializer = BaseUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -25,8 +27,8 @@ class LoginView(GenericAPIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
 
-    @swagger_auto_schema()
-    def post(self, request):
+    @swagger_auto_schema(method='post')
+    def post(self, request: Request, *args, **kwargs) -> Response:
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(request, username=username, password=password)
@@ -42,8 +44,8 @@ class LogoutView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
-    @swagger_auto_schema()
-    def post(self, request):
+    @swagger_auto_schema(method='post')
+    def post(self, request: Request, *args, **kwargs) -> Response:
         logout(request)
         return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
 
@@ -52,8 +54,8 @@ class UserProfileView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
-    @swagger_auto_schema()
-    def get(self, request):
+    @swagger_auto_schema(method='post')
+    def get(self, request: Request, *args, **kwargs) -> Response:
         user = request.user
         serializer = ProfileSerializer(instance=user)
         return Response(serializer.data, status=status.HTTP_200_OK)
