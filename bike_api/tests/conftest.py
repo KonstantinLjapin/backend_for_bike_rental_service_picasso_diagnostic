@@ -1,5 +1,5 @@
 import pytest
-
+import requests
 
 @pytest.fixture
 def base_url():
@@ -12,6 +12,26 @@ def api(base_url):
 
 
 @pytest.fixture
+def bike(api):
+    return api + '/bikes'
+
+
+@pytest.fixture
+def bike_list(bike):
+    return bike + '/list'
+
+
+@pytest.fixture
+def rent_start(bike):
+    return bike + '/rent_start'
+
+
+@pytest.fixture
+def rent_end(bike):
+    return bike + '/rent_end'
+
+
+@pytest.fixture
 def users(api):
     return api + '/users'
 
@@ -19,3 +39,18 @@ def users(api):
 @pytest.fixture
 def users_register(users):
     return users + '/register'
+
+
+@pytest.fixture
+def users_login(users):
+    return users + '/login'
+
+
+@pytest.fixture
+def users_profile(users):
+    return users + '/profile'
+
+
+@pytest.fixture
+def users_logout(users):
+    return users + '/logout'
