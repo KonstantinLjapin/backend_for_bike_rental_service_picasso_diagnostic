@@ -14,6 +14,7 @@ from .tasks import reprocessed
 class ListBikeView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+    serializer_class = BaseBikeSerializer
 
     @swagger_auto_schema()
     def get(self, request):
@@ -25,6 +26,7 @@ class ListBikeView(GenericAPIView):
 class RentStartView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+    serializer_class = BaseBikeSerializer
 
     @swagger_auto_schema()
     def put(self, request):
@@ -48,6 +50,7 @@ class RentStartView(GenericAPIView):
 class RentEndView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+    serializer_class = BaseBikeSerializer
 
     @swagger_auto_schema()
     def put(self, request):

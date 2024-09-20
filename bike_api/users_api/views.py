@@ -13,6 +13,7 @@ from drf_yasg import openapi
 class RegisterView(GenericAPIView):
     permission_classes = [permissions.AllowAny]
     authentication_classes = []
+    serializer_class = BaseUserSerializer
 
     @swagger_auto_schema(method='post')
     def post(self, request: Request, *args, **kwargs) -> Response:
@@ -53,6 +54,7 @@ class LogoutView(GenericAPIView):
 class UserProfileView(GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+    serializer_class = ProfileSerializer
 
     @swagger_auto_schema(method='post')
     def get(self, request: Request, *args, **kwargs) -> Response:
